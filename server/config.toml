@@ -1,0 +1,17 @@
+# EchoDraw Server 默认配置 (dev)
+#
+# 优先级: env > config.local.toml > 本文件 > 代码内置默认值
+# 修改本文件后, 重启 server 才生效
+# 本地覆盖: 复制为 config.local.toml 后修改 (后者进 .gitignore)
+
+port = "8080"
+
+[llm]
+# OpenAI-compatible 协议, 兼容 OpenAI/DeepSeek/Qwen/Moonshot
+base_url = "https://api.openai.com/v1"
+api_key = ""        # 留空 = 禁用 LLM, 仅走规则引擎
+model = "gpt-4o-mini"
+
+[canvas]
+width = 1200
+height = 800
