@@ -470,10 +470,13 @@ func resolveTarget(t string, ctx []model.Shape) *model.Selection {
 		}
 	}
 
-	for k := range model.ColorHex {
-		if strings.Contains(t, k) {
-			sel.Filter = k
-			break
+	// 仅当文本里没有"改色动词"时, 才把颜色词当作 filter (避免"改成蓝色"误把蓝色当 filter)
+	if !hasAny(t, []string{"改成", "变成", "改为", "换成", "改色", "变色", "改颜色"}) {
+		for k := range model.ColorHex {
+			if strings.Contains(t, k) {
+				sel.Filter = k
+				break
+			}
 		}
 	}
 	for k := range model.ShapeWords {
