@@ -1,11 +1,20 @@
+import { Canvas } from "./components/Canvas";
+
+const CANVAS_W = 1200;
+const CANVAS_H = 800;
+
 export default function App() {
   return (
-    <div className="flex h-full items-center justify-center bg-slate-50">
-      <div className="text-center">
-        <h1 className="text-4xl font-bold text-slate-900">EchoDraw · 绘声</h1>
-        <p className="mt-2 text-slate-600">纯语音控制绘图工具</p>
-        <p className="mt-8 text-sm text-slate-400">脚手架已就绪 (PR #8)</p>
-      </div>
+    <div className="flex h-full flex-col bg-slate-50">
+      <header className="flex items-center justify-between border-b bg-white px-6 py-3 shadow-sm">
+        <h1 className="text-xl font-bold text-slate-900">EchoDraw · 绘声</h1>
+        <div className="text-sm text-slate-500">画布 {CANVAS_W} × {CANVAS_H}</div>
+      </header>
+      <main className="flex flex-1 items-center justify-center overflow-auto p-6">
+        <div className="rounded-lg bg-white shadow-lg" style={{ width: CANVAS_W, height: CANVAS_H }}>
+          <Canvas width={CANVAS_W} height={CANVAS_H} />
+        </div>
+      </main>
     </div>
   );
 }
