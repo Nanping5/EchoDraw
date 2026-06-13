@@ -24,3 +24,7 @@ dist/
 # Worktree markers
 .spec-workflow/
 .claude/
+
+# Viper 本地配置覆盖 (不进 git)
+server/config.local.toml
+**/config.local.toml
