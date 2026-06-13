@@ -1,2 +1,26 @@
+# OS
+.DS_Store
+Thumbs.db
+
+# IDE
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Node
+node_modules/
+dist/
+.env
+.env.local
+*.log
+
+# Go
+*.exe
+*.test
+*.out
+/server/bin/
+
+# Worktree markers
 .spec-workflow/
 .claude/
