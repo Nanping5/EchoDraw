@@ -284,10 +284,19 @@ func pickNumber(t string, prefixes []string) (float64, bool) {
 	return 0, false
 }
 
+// 中文数字 → 阿拉伯数字
+var cnNum = map[string]float64{
+	"一": 1, "二": 2, "两": 2, "三": 3, "四": 4, "五": 5,
+	"六": 6, "七": 7, "八": 8, "九": 9, "十": 10, "半": 0.5,
+}
+
 func pickScale(t string) (float64, bool) {
-	re := regexp.MustCompile(`(\d+(?:\.\d+)?)\s*倍`)
+	re := regexp.MustCompile(`(\d+(?:\.\d+)?|[一二两三四五六七八九十半])\s*倍`)
 	if m := re.FindStringSubmatch(t); m != nil {
 		if n, err := strconv.ParseFloat(m[1], 64); err == nil && n > 0 {
+			return n, true
+		}
+		if n, ok := cnNum[m[1]]; ok {
 			return n, true
 		}
 	}
@@ -477,9 +486,14 @@ func resolveTarget(t string, ctx []model.Shape) *model.Selection {
 		}
 	}
 
+	// filter 存在时, ref 退化为"all" 让 filter 单独决定 (否则"那个红色的"会被 last 误判)
+	if sel.Ref == "last" && sel.Filter != "" {
+		sel.Ref = "all"
+	}
 	sel.IDs = filterIDs(ctx, sel.Ref, sel.Filter)
 
-	if len(sel.IDs) == 0 && (sel.Ref == "last" || sel.Ref == "") && len(ctx) > 0 {
+	// 无 filter 时退到 ctx 最后一项
+	if len(sel.IDs) == 0 && sel.Filter == "" && (sel.Ref == "last" || sel.Ref == "") && len(ctx) > 0 {
 		sel.IDs = []string{ctx[len(ctx)-1].ID}
 	}
 	if len(sel.IDs) == 0 {
