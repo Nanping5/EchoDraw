@@ -67,6 +67,8 @@ const (
 	CmdExport CommandType = "export"
 	// AskBack 信息不足, 反问用户
 	CmdAskBack CommandType = "ask_back"
+	// CmdUnknown 规则未命中, 交给 LLM
+	CmdUnknown CommandType = "unknown"
 	// Scene AI 生成的复合场景 (含多个图元)
 	CmdScene CommandType = "scene"
 )
